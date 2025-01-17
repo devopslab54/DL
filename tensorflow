@@ -1,0 +1,23 @@
+import tensorflow as tf
+
+# Generate dummy data
+train_data = tf.random.normal((1000, 784))
+train_labels = tf.random.uniform((1000,), minval=0, maxval=10, dtype=tf.int32)
+
+# Define the model
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(64, activation='relu', input_shape=(784,)),
+    tf.keras.layers.Dense(10, activation='softmax')
+])
+
+# Compile the model
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+# Train the model
+model.fit(train_data, train_labels, epochs=5, batch_size=32)
+
+# Evaluate the model
+loss, accuracy = model.evaluate(train_data, train_labels)
+print(f"TensorFlow Model - Loss: {loss}, Accuracy: {accuracy}")
